@@ -121,11 +121,10 @@ for(i in 1:length(week)) {
 }
 
 
-<<<<<<< HEAD
+
 first_draft <- ggplot(data = figure3, aes(x = year, no3_n)) + geom_line()
-=======
-myplot <- ggplot(data = figure3, aes(x = year, no3_n)) + geom_line()
->>>>>>> e8b9841b84addd5f1dc7b906af42cba59171e1c2
+
+
 
 
 # what I can do: group by year, then reorder so weeks go up ordinally. then run my for loop
