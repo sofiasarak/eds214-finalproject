@@ -78,19 +78,34 @@ ggplot(data = fig3_byyear, aes(x = year, y = mean)) + geom_line() +
   facet_wrap(~nutrient, dir = "v", scales = "free_y") + 
   geom_line(aes(x = 1989), linetype = "dashed")
 
-#....................Trying to make function.....................
+#....................Making the function.....................
 
-function() {
-  for i in 1:length(sample_date) {
-    
-  }
+moving_average <- function(focal_date, dates, conc, win_size_wks) {
+  # Which dates are in the window?
+  is_in_window <- (dates > focal_date - (win_size_wks / 2) * 7) &
+    (dates < focal_date + (win_size_wks / 2) * 7)
+  # Find the associated concentrations
+  window_conc <- conc[is_in_window]
+  # Calculate the mean
+  result <- mean(window_conc)
   
+  return(result)
 }
 
-bin_col <- vector(mode = "numeric", length = length(longfig3$week)-8)
-bin_col[i] <- bin_col
+moving_average(focal_date = lubridate::as_date("1989-05-16"),
+               dates = figure3$sample_date, 
+               conc = figure3$k, 
+               win_size_wks = 9)
 
-apply(longfig3, )
+#using sapply()
+
+figure3$calc_rolling <- sapply(
+  figure3$sample_date,
+  moving_average,
+  dates = figure3$sample_date,
+  conc = figure3$ca,
+  win_size_wks = 9
+)
 
 #..............................Mess..............................
 
