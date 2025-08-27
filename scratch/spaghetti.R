@@ -80,22 +80,12 @@ ggplot(data = fig3_byyear, aes(x = year, y = mean)) + geom_line() +
 
 #....................Making the function.....................
 
-moving_average <- function(focal_date, dates, conc, win_size_wks) {
-  # Which dates are in the window?
-  is_in_window <- (dates > focal_date - (win_size_wks / 2) * 7) &
-    (dates < focal_date + (win_size_wks / 2) * 7)
-  # Find the associated concentrations
-  window_conc <- conc[is_in_window]
-  # Calculate the mean
-  result <- mean(window_conc)
-  
-  return(result)
-}
+source(here("R", "moving_average.R"))
 
 moving_average(focal_date = lubridate::as_date("1989-05-16"),
                dates = figure3$sample_date, 
-               conc = figure3$k, 
-               win_size_wks = 9)
+               value = figure3$k, 
+               interval_wks = 9)
 
 #using sapply()
 
