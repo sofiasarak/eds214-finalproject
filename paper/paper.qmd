@@ -24,12 +24,11 @@ Describe data
 #| include: false
 bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
 ```
-```{r} 
+
+```{r}
 bisley_streams_head %>% 
   kable(col.names = c("Site Name", "Sample Date", "Year", "K", "NO3_N", "Mg", "Ca", "NH4_N"))
 ```
-
-
 
 ## Methods
 
