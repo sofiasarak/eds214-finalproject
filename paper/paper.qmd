@@ -43,7 +43,9 @@ Figure 3 calls for the use of moving averages. We source the function moving_ave
 
 ```{r}
 ca_plot <- ggplot(data = bisley_streams, aes(x = sample_date, y = ca_9wk_avg)) + 
-  geom_line() 
-  geom_line(aes(x = as.integer(1989)))
+  geom_line(aes(color = sample_id)) 
+  geom_line(aes(x = as.integer(1989))) +
+    facet_wrap(~, scales = "free") +
+  labs()
 ca_plot
 ```
