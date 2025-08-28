@@ -175,3 +175,36 @@ year1 <- longfig3 %>%
   filter(year == 1989, sample_id == "MPR")
 
 year1$week <- as.Date(year1$wee
+                      
+
+                      
+                      
+many_moving_avg_9wks <- function(date_col, col_vec, interval_wks) {
+  for (i in 1:length(col_vec)) {
+    k <- i + 3
+    sapply(
+      date_col,
+      moving_average,
+      dates = date_col,
+      value = bisley_streams[,k],
+      interval_wks = interval_wks)
+  }
+}
+
+many_moving_avg(
+  date_col = bisley_streams$sample_date,
+  col_vec = conc_vec,
+  interval_wks = 9
+)
+
+for (i in 1:length(conc_vec)) {
+  k <- i + 3
+  sapply(
+    bisley_streams$sample_date,
+    moving_average,
+    dates = bisley_streams$sample_date,
+    value = bisley_streams[,k],
+    interval_wks = 9)
+}
+
+sapply(conc)
