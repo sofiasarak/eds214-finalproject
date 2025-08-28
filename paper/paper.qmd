@@ -26,12 +26,11 @@ Describe data
 #| include: false
 bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
 ```
-```{r} 
+
+```{r}
 bisley_streams_head %>% 
   kable(col.names = c("Site Name", "Sample Date", "Year", "K", "NO3_N", "Mg", "Ca", "NH4_N"))
 ```
-
-
 
 ## Methods
 
@@ -45,8 +44,16 @@ Figure 3 calls for the use of moving averages. We source the function moving_ave
 ## Results
 
 ```{r}
+<<<<<<< HEAD
 ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
   geom_line() 
   geom_line(aes(x = as.integer(1989)))
+=======
+ca_plot <- ggplot(data = bisley_streams, aes(x = sample_date, y = ca_9wk_avg)) + 
+  geom_line(aes(color = sample_id)) 
+  geom_line(aes(x = as.integer(1989))) +
+    facet_wrap(~, scales = "free") +
+  labs()
+>>>>>>> ce0394fe863b2edd694ca42541598f99dbff4e1d
 ca_plot
 ```
