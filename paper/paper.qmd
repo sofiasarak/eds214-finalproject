@@ -16,6 +16,8 @@ library(kableExtra)
 
 ## Background
 
+This document aims to reproduce Figure 3 from 
+
 ## Data
 
 Describe data
@@ -43,7 +45,7 @@ Figure 3 calls for the use of moving averages. We source the function moving_ave
 ## Results
 
 ```{r}
-ca_plot <- ggplot(data = bisley_streams, aes(x = sample_date, y = ca_9wk_avg)) + 
+ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
   geom_line() 
   geom_line(aes(x = as.integer(1989)))
 ca_plot

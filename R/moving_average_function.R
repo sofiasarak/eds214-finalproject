@@ -18,6 +18,6 @@ moving_average <- function(focal_date, dates, value, interval_wks) {
    window_value <- value[is_in_window]
    
   # prints result
-  result <- mean(window_value)
+  result <- mean(window_value, na.rm = TRUE)
   return(result)
 }
