@@ -23,10 +23,27 @@ This document aims to reproduce Figure 3 from Schaefer et al. 2000, cited below.
 ```{r}
 #| include: false
 bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
-bisley_streams_head <- read_csv(here("outputs", "bisley_streams_head.csv"))
+bisley_streams_sum <- read_csv(here("outputs", "bisley_streams_sum.csv"))
 ```
 
-An example (first six lines) of the cleaned data is below! It contains nutrient values for potassium, nitrate, magnesium, calcium, and ammonium nitrogen, from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).
+This contains nutrient values from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).
+
+A quick summary of the data is below. It includes the minimum, maximum, and mean values of the nutrient concentrations, independent of site and year. It is meant to provide a better understanding of the range of concentrations across the years. Nutrient values are in the following units:
+
+Calcium (ca): mg l\^-1
+
+Potassium (K): mg l\^-1
+
+Magnesium (Mg): mg l\^-1
+
+Ammonium nitrogen (nh4_n): micrograms l\^-1
+
+Nitrate-N (no3_n): micrograms l\^-1
+
+```{r}
+#| echo: false
+bisley_streams_sum 
+```
 
 ## Methods
 
@@ -53,4 +70,12 @@ moving_average <- function(focal_date, dates, value, interval_wks) {
 
 After producing rolling averages for each of the five nutrients and plotting them separately using ggplot, I used the patchwork package to stack them on top of one another.
 
-![Attempt to replicate Figure 3 from (Schaefer et al. 2000)](images/final.png)
+![Attempt to replicate Figure 3 from (Schaefer et al. 2000)](images/final-03.png)
+
+### Citations
+
+
+Schaefer, Douglas. A., William H. McDowell, Fredrick N. Scatena, and Clyde E. Asbury. 2000. “Effects of Hurricane Disturbance on Stream Water Concentrations and Fluxes in Eight Tropical Forest Watersheds of the Luquillo Experimental Forest, Puerto Rico.” Journal of Tropical Ecology 16 (2): 189–207. https://doi.org/10.1017/s0266467400001358.
+
+Schaefer, Douglas A., et al. "Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico." Journal of Tropical Ecology 16.2 (2000): 189-207.
+

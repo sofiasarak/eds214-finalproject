@@ -8,7 +8,8 @@
 
 # assigning "hurricane" its own value in order to plot it as a vertical line
 
-hurricane <- 1989
+hurricane <- as.numeric(1989)
+library(scales)
 
 # sourcing my ggplot theme
 
@@ -18,13 +19,13 @@ source(here("R", "ggplot_theme.R"))
 
 # creating a line plot with just the potassium values and saving
 
-k_plot <- ggplot(data = calc_k, 
-                 aes(sample_date, y = k_avg, linetype = sample_id)) + 
-  geom_line() +
-  geom_vline(xintercept = hurricane, linetype = "dashed") +  
+k_plot <- ggplot() + 
+  geom_line(data = calc_k, 
+            aes(x = sample_date, y = k_avg, linetype = sample_id)) +  
   labs(x = " ", y = "K mg l^-1", subtitle = "Year") + 
   theme_fig3() + 
-  theme(plot.subtitle = element_text(hjust = 0.5))
+  theme(plot.subtitle = element_text(hjust = 0.5)) +
+  geom_vline(xintercept = 1989)
 
 ggsave(here("outputs", "k_plot.png"))
 
@@ -34,7 +35,8 @@ no3_n_plot <- ggplot(data = calc_no3_n,
                      aes(sample_date, y = no3_n_avg, linetype = sample_id)) +
   geom_line() +
   labs(x = " ", y = "NO3N µg l^-1") + 
-  theme_fig3()
+  theme_fig3() +
+  geom_vline(aes(xintercept = hurricane), linetype = "dashed", color = "black")
 
 ggsave(here("outputs", "no3_n_plot.png"))
 
@@ -73,7 +75,10 @@ ggsave(here("outputs", "no3_n_plot.png"))
 library(patchwork)
 
 #stack figures on top of each other in same order as Figure 3
-final <- (k_plot/no3_n_plot/mg_plot/ca_plot/nh4_n_plot) + plot_layout(guides = "collect", axes = "keep") 
+final <- (k_plot/no3_n_plot/mg_plot/ca_plot/nh4_n_plot) + 
+  plot_layout(guides = "collect", axes = "keep") +
+  plot_annotation(title = "Stream nutrients concentrations in Bisley, Puerto Rico",
+                  subtitle = "Before and after Hurrican Hugo (1989)")
 
 ggsave(here("outputs", "final.png"))
 

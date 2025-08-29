@@ -109,25 +109,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>An example (first six lines) of the cleaned data is below! It contains nutrient values for potassium, nitrate, magnesium, calcium, and ammonium nitrogen, from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).</p>
+<p>This contains nutrient values from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).</p>
+<p>A quick summary of the data is below. It includes the minimum, maximum, and mean values of the nutrient concentrations, independent of site and year. It is meant to provide a better understanding of the range of concentrations across the years. Nutrient values are in the following units:</p>
+<p>Calcium (ca): mg l^-1</p>
+<p>Potassium (K): mg l^-1</p>
+<p>Magnesium (Mg): mg l^-1</p>
+<p>Ammonium nitrogen (nh4_n): micrograms l^-1</p>
+<p>Nitrate-N (no3_n): micrograms l^-1</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+   ...1 nutrient   min     max   mean
+  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1     1 ca        0.21   15.8    5.26
+2     2 k         0.11    3.44   0.92
+3     3 mg        0.1     8.7    2.88
+4     4 nh4_n     5     237     25   
+5     5 no3_n     5    1468    123   </code></pre>
+</div>
+</div>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>Figure 3 calls for the use of moving averages. We created a moving average function that ran over a 9-week interval, just as the methods in the paper. It included each date from the Sample Date column as the “focal date”, and took the mean of all the values within the 9-week period.</p>
 <p>Code for the moving_average function can be seen below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>moving_average <span class="ot">&lt;-</span> <span class="cf">function</span>(focal_date, dates, value, interval_wks) {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculating interval window within dates vector</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  is_in_window <span class="ot">&lt;-</span> (dates <span class="sc">&gt;</span> focal_date <span class="sc">-</span> (interval_wks <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">7</span>) <span class="sc">&amp;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    (dates <span class="sc">&lt;</span> focal_date <span class="sc">+</span> (interval_wks <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">7</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># subsetting the values that correspond with your interval window</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   window_value <span class="ot">&lt;-</span> value[is_in_window]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># printing result</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">mean</span>(window_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>moving_average <span class="ot">&lt;-</span> <span class="cf">function</span>(focal_date, dates, value, interval_wks) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculating interval window within dates vector</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  is_in_window <span class="ot">&lt;-</span> (dates <span class="sc">&gt;</span> focal_date <span class="sc">-</span> (interval_wks <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">7</span>) <span class="sc">&amp;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (dates <span class="sc">&lt;</span> focal_date <span class="sc">+</span> (interval_wks <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">7</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># subsetting the values that correspond with your interval window</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   window_value <span class="ot">&lt;-</span> value[is_in_window]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># printing result</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">mean</span>(window_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="results" class="level2">
@@ -135,10 +153,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After producing rolling averages for each of the five nutrients and plotting them separately using ggplot, I used the patchwork package to stack them on top of one another.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/final.png" class="img-fluid figure-img"></p>
+<p><img src="images/final-03.png" class="img-fluid figure-img"></p>
 <figcaption>Attempt to replicate Figure 3 from (Schaefer et al.&nbsp;2000)</figcaption>
 </figure>
 </div>
+<section id="citations" class="level3">
+<h3 class="anchored" data-anchor-id="citations">Citations</h3>
+<p>Schaefer, Douglas. A., William H. McDowell, Fredrick N. Scatena, and Clyde E. Asbury. 2000. “Effects of Hurricane Disturbance on Stream Water Concentrations and Fluxes in Eight Tropical Forest Watersheds of the Luquillo Experimental Forest, Puerto Rico.” Journal of Tropical Ecology 16 (2): 189–207. https://doi.org/10.1017/s0266467400001358.</p>
+<p>Schaefer, Douglas A., et al.&nbsp;“Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico.” Journal of Tropical Ecology 16.2 (2000): 189-207.</p>
+</section>
 </section>
 
 </main>

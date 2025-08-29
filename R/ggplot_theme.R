@@ -1,6 +1,6 @@
 # creating theme for first four plots
 theme_fig3 <- function(){
-  theme_minimal() +
+  theme_light() +
     theme(axis.text.x = element_blank(), 
           panel.grid.major = element_blank(),
           legend.title = element_blank(),
@@ -11,7 +11,7 @@ theme_fig3 <- function(){
 
 # for last plot, because this one must contain the bottom axis title
 theme_fig3_last <- function(){
-  theme_minimal() +
+  theme_light() +
     theme(panel.grid.major = element_blank(),
           legend.title = element_blank(),
           axis.title.y = element_text(size = 9),

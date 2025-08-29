@@ -1,5 +1,7 @@
 # EDS214: Final Project
 
+## Sofia Sarak
+
 ![](images/fig3_original.png)
 
 This code attempts to replicate the above figure, which is Figure 3 of the following paper:
@@ -40,7 +42,13 @@ T Data wrangling followed these general steps:
 
     -   No x axis labels, except for the bottom plot
 
-2.  The five plots were combined using the patchwork package and saved in **outputs**.
+Each plot was saved as a separate png file in the **outputs** folder.
+
+2.  The five plots were combined using the patchwork package and saved in **outputs** as final.png.
+
+### Visual schematic for this workflow
+
+![](images/eds214-workflow.png)
 
 ### Notes:
 

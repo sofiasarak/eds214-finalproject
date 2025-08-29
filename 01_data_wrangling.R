@@ -47,11 +47,15 @@ write.csv(bisley_streams, "outputs/bisley_streams_clean.csv")
 
 #..................Making subset to preview data.................
 
-bisley_streams_head <- bisley_streams %>% 
-  slice_head(n = 6) %>% 
-  select(!"code")
+bisley_streams_long <- bisley_streams %>% 
+  pivot_longer(cols = k:nh4_n, names_to = "nutrient", values_to = "conc")
+  
 
-bisley_streams_head <- bisley_streams_head %>% 
-  select(!"...1")
+bisley_streams_sum <- bisley_streams_long %>% 
+  group_by(nutrient) %>% 
+  summarize(min = min(conc, na.rm = TRUE), 
+                      max = max(conc, na.rm = TRUE), 
+                      mean= mean(conc, na.rm = TRUE, round(4)))
+
  
-write.csv(bisley_streams_head, "outputs/bisley_streams_head.csv")
+write.csv(bisley_streams_sum, "outputs/bisley_streams_sum.csv")
