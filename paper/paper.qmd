@@ -16,44 +16,36 @@ library(kableExtra)
 
 ## Background
 
-This document aims to reproduce Figure 3 from 
+This document aims to reproduce Figure 3 from the paper "Chemistry of Stream Water from the Luquillo Mountains", cited below. Data comes from the Environmental Data Initiative under the data package also titled "Chemistry of stream water from the Luquillo Mountains". It takes a look at nutrient values of stream water in Puerto Rico over time. The paper specifically aims to analyze the fluctuations in nutrients relative to weather patterns, like hurricanes.
 
 ## Data
-
-Describe data
 
 ```{r}
 #| include: false
 bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
+bisley_streams_head <- read_csv(here("outputs", "bisley_streams_head.csv"))
 ```
 
+An example (first six lines) of the cleaned data is below! It contains nutrient values for potassium, nitrate, magnesium, calcium, and ammonium nitrogen, from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).
+
 ```{r}
-bisley_streams_head %>% 
-  kable(col.names = c("Site Name", "Sample Date", "Year", "K", "NO3_N", "Mg", "Ca", "NH4_N"))
+
 ```
 
 ## Methods
 
-Figure 3 calls for the use of moving averages. We source the function moving_average() from an .R file in our R folder, all of which we made beforehand.
+Figure 3 calls for the use of moving averages. We created a moving average function that ran over a 9-week interval, just as the methods in the paper. It included each date from the Sample Date column as the "focal date", and took the mean of all the values within the 9-week period.
 
 ```{r}
-
 
 ```
 
 ## Results
 
 ```{r}
-<<<<<<< HEAD
+
 ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
   geom_line() 
   geom_line(aes(x = as.integer(1989)))
-=======
-ca_plot <- ggplot(data = bisley_streams, aes(x = sample_date, y = ca_9wk_avg)) + 
-  geom_line(aes(color = sample_id)) 
-  geom_line(aes(x = as.integer(1989))) +
-    facet_wrap(~, scales = "free") +
-  labs()
->>>>>>> ce0394fe863b2edd694ca42541598f99dbff4e1d
-ca_plot
+
 ```

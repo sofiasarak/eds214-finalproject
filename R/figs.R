@@ -4,28 +4,59 @@
 ##                                                                            --
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
-  geom_line()
-ggsave(here("outputs", "ca_plot.png"))
+#..........................quick set up..........................
 
-k_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = k_9wk_avg)) + 
-  geom_line()
+# assigning "hurricane" its own value in order to plot it as a vertical line
+
+hurricane <- 1989
+
+# sourcing my ggplot theme
+
+source(here("R", "ggplot_theme.R"))
+
+#..............actually plotting for all nutrients...............
+
+# creating a line plot with just the potassium values and saving
+
+k_plot <- ggplot(data = calc_k, aes(sample_date, y = k_avg, linetype = sample_id)) + 
+  geom_line() +
+  geom_vline(xintercept = hurricane, linetype = "dashed") +  
+  labs(x = " ", y = "K mg l^-1") + 
+  theme_fig3()
+
 ggsave(here("outputs", "k_plot.png"))
 
-no3_n_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = no3_n_9wk_avg)) + 
-  geom_line()
+# nitrate
+
+no3_n_plot <- ggplot(data = calc_no3_n, aes(sample_date, y = no3_n_avg, linetype = sample_id)) + 
+  geom_line() +
+  labs(x = " ", y = "NO3N micrograms l^-1") + 
+  theme_fig3()
+
 ggsave(here("outputs", "no3_n_plot.png"))
 
-mg_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = mg_9wk_avg)) + 
-  geom_line()
-ggsave(here("outputs", "mg_plot.png"))
+# magnesium
 
-ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
+mg_plot <- ggplot(data = calc_mg, aes(x = sample_date, y = mg_avg, linetype = sample_id)) + 
+  geom_line() +
+   labs(x = " ", y = "Mg mg l^-1") + 
+  theme_fig3() +
+ggsave(here("outputs", "mg_plot.png")) 
+
+# calcium
+
+ca_plot <- ggplot(data = calc_ca, aes(x = sample_date, y = ca_avg, linetype = sample_id)) + geom_line()
+ggsave(here("outputs", "ca_plot.png"))
+
+#ammonium
+
+nh4_n_plot <- ggplot(data = calc_nh4_n, aes(x = sample_date, y = nh4_n_avg)) + 
   geom_line()
+ggsave(here("outputs", "no3_n_plot.png"))
 
 #..............Combining to create patchwork figure..............
 
 library(patchwork)
 
-final <- (ca_plot/k_plot/no3_n_plot/mg_plot)
+final <- (ca_plot/k_plot/no3_n_plot/mg_plot/nh4_n_plot) + plot_layout(guides = "collect")
 

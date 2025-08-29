@@ -10,69 +10,62 @@
 # loading the function into our global environment
 source(here("R", "moving_average_function.R"))
 
-# creating a new df that will house only the moving averages
+# calling in bisley_streams
 
-bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
+bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv")) 
 
-bisley_calc_avg <- bisley_streams %>% 
-  select(sample_date, sample_id, year)
+
+#...................Calculating moving average...................
+
 
 # our function is applied to the entire dataset using tidyverse::sapply()
-# calculating moving average over 9 week interval for potassium (k)
-bisley_calc_avg$k_9wk_avg <- sapply(
-  bisley_streams$sample_date,
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$k,
-  interval_wks = 9
-)
+# we apply it to each nutrient, one by one
 
-# for no3_n
-bisley_calc_avg$no3_n_9wk_avg <- sapply(
-  bisley_streams$sample_date,
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$no3_n,
-  interval_wks = 9
-)
+# calculating moving average over 9 week interval for potassium (k)
+calc_k <- bisley_streams %>% 
+  group_by(sample_id) %>% 
+  mutate(k_avg = sapply(sample_date, 
+                        moving_average, 
+                        dates = sample_date, 
+                        value = k, 
+                        interval_wks = 9))
+
+# for nitrate (no3_n)
+calc_no3_n <- bisley_streams %>% 
+  group_by(sample_id) %>% 
+  mutate(no3_n_avg = sapply(sample_date, 
+                        moving_average, 
+                        dates = sample_date, 
+                        value = no3_n, 
+                        interval_wks = 9))
 
 # for magnesium (mg)
 
-bisley_calc_avg$mg_9wk_avg <- sapply(
-  bisley_streams$sample_date,
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$mg,
-  interval_wks = 9
-)
+calc_mg <- bisley_streams %>% 
+  group_by(sample_id) %>% 
+  mutate(mg_avg = sapply(sample_date, 
+                            moving_average, 
+                            dates = sample_date, 
+                            value = mg, 
+                            interval_wks = 9))
 
 # for calcium (ca)
 
-bisley_calc_avg$ca_9wk_avg <- sapply(
-  bisley_streams$sample_date,
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$ca,
-  interval_wks = 9
-)
+calc_ca <- bisley_streams %>% 
+  group_by(sample_id) %>% 
+  mutate(ca_avg = sapply(sample_date, 
+                            moving_average, 
+                            dates = sample_date, 
+                            value = ca, 
+                            interval_wks = 9))
 
-# for nh4_n
+# for ammonium (nh4_n)
 
-bisley_calc_avg$nh4_n_9wk_avg <- sapply(
-  bisley_streams$sample_date,
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$nh4_n,
-  interval_wks = 9
-)
+calc_nh4_n <- bisley_streams %>% 
+  group_by(sample_id) %>% 
+  mutate(nh4_n_avg = sapply(sample_date, 
+                            moving_average, 
+                            dates = sample_date, 
+                            value = nh4_n, 
+                            interval_wks = 9))
 
-conc_vec <- c("k", "no3_n", "mg", "ca", "nh4_n")
-
-bisley_calc_avg$k_9wk_avg <- bisley_streams$sample_date %>% 
-  group_by(as.factor(sample_id)) %>% 
-  sapply(
-  moving_average,
-  dates = bisley_streams$sample_date,
-  value = bisley_streams$k,
-  interval_wks = 9
-)
