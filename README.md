@@ -12,9 +12,9 @@ The figure and its respective analysis summarize the fluctuations of stream wate
 
 ### 1. Data Cleaning and Wrangling (**01_data_wrangling.R**)
 
-This can be found within the data_wrangling.R script within the project root. Data wrangling followed these general steps:
+T Data wrangling followed these general steps:
 
-1.  Reading in four different .csv files downloaded from the source mentioned above (**raw data stored in data folder**), simultaneously cleaning names and selecting for necessary columns.
+1.  Reading in four different .csv files downloaded from the source mentioned above (raw data stored in **data** folder), simultaneously cleaning names and selecting for necessary columns.
 
 2.  Combined all four data frames into one.
 
@@ -24,17 +24,23 @@ This can be found within the data_wrangling.R script within the project root. Da
 
 ### 2. Calculating Moving Averages (**02_moving_avg_calc.R**)
 
-1.  Created a function to calculate moving average, with arguments for focal date, date vector, value vector, and week interval. In our case, we used a week interval of 9 weeks. (**function definition in R folder**)
+1.  Created a function to calculate moving average, with arguments for focal date, date vector, value vector, and week interval. In our case, we used a week interval of 9 weeks. (Function definition in **R** folder)
 
 2.  Applied the moving average function to the entire cleaned data using sapply(). It was run five separate times for each of the five nutrients in the figure.
 
-3.  Outputs were saved as separate data frames in the outputs folder.
+3.  Separate data frames for each nutrient calculated were saved and stored as .csv files the **outputs** folder.
 
 ### 3. Plotting (**03_figs.R**)
 
 1.  Five separate plots were created from the five saved data sets, using ggplot. Specifications include:
 
-2.  The five plots were combined using the patchwork package and saved in outputs.
+    -   Line type defined by the variable sample_id, or site name
+
+    -   Minimal theme (created our own)
+
+    -   No x axis labels, except for the bottom plot
+
+2.  The five plots were combined using the patchwork package and saved in **outputs**.
 
 ### Notes:
 

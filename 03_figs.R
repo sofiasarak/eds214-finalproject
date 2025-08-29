@@ -69,8 +69,10 @@ ggsave(here("outputs", "no3_n_plot.png"))
 
 #..............Combining to create patchwork figure..............
 
+# load patchwork, a package that allows for combining figures together
 library(patchwork)
 
+#stack figures on top of each other in same order as Figure 3
 final <- (k_plot/no3_n_plot/mg_plot/ca_plot/nh4_n_plot) + plot_layout(guides = "collect", axes = "keep") 
 
 ggsave(here("outputs", "final.png"))

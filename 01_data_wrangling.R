@@ -50,4 +50,8 @@ write.csv(bisley_streams, "outputs/bisley_streams_clean.csv")
 bisley_streams_head <- bisley_streams %>% 
   slice_head(n = 6) %>% 
   select(!"code")
+
+bisley_streams_head <- bisley_streams_head %>% 
+  select(!"...1")
+ 
 write.csv(bisley_streams_head, "outputs/bisley_streams_head.csv")
