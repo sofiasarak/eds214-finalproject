@@ -19,7 +19,7 @@ bisley_streams <- read_csv(here("outputs", "bisley_streams_clean.csv"))
 
 
 # our function is applied to the entire dataset using sapply, and we apply it to each nutrient, one by one
-# each separate dataframe is saved as its own csv file in outputs
+# each separate data frame is saved as its own csv file in outputs
 
 # calculating moving average over 9 week interval for potassium (k)
 calc_k <- bisley_streams %>% 

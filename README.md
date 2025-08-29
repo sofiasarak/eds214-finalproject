@@ -52,4 +52,4 @@ Each plot was saved as a separate png file in the **outputs** folder.
 
 ### Notes:
 
-For package installation, be sure to run "environment_initiation.R" in the R folder.
+For package installation, be sure to run "environment_initiation.R" in the project root.
