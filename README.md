@@ -1,6 +1,6 @@
 # EDS214: Final Project
 
-![](images/Screenshot%202025-08-28%20at%207.56.56%20PM.png)
+![](images/fig3_original.png)
 
 This code attempts to replicate the above figure, which is Figure 3 of the following paper:
 
@@ -20,7 +20,7 @@ This can be found within the data_wrangling.R script within the project root. Da
 
 3.  Arranged data to be ascending by year, and selected for only the necessary years (1988 to 1995).
 
-4. Clean data saved as a .csv within the **outputs** folder.
+4.  Clean data saved as a .csv within the **outputs** folder.
 
 ### 2. Calculating Moving Averages (**02_moving_avg_calc.R**)
 
