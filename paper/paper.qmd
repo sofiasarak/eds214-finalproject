@@ -16,7 +16,7 @@ library(kableExtra)
 
 ## Background
 
-This document aims to reproduce Figure 3 from the paper "Chemistry of Stream Water from the Luquillo Mountains", cited below. Data comes from the Environmental Data Initiative under the data package also titled "Chemistry of stream water from the Luquillo Mountains". It takes a look at nutrient values of stream water in Puerto Rico over time. The paper specifically aims to analyze the fluctuations in nutrients relative to weather patterns, like hurricanes.
+This document aims to reproduce Figure 3 from Schaefer et al. 2000, cited below. Data comes from the Environmental Data Initiative under the data package also titled "Chemistry of stream water from the Luquillo Mountains". It takes a look at nutrient values of stream water in Puerto Rico over time. The paper specifically aims to analyze the fluctuations in nutrients relative to weather patterns, like hurricanes.
 
 ## Data
 
@@ -28,24 +28,29 @@ bisley_streams_head <- read_csv(here("outputs", "bisley_streams_head.csv"))
 
 An example (first six lines) of the cleaned data is below! It contains nutrient values for potassium, nitrate, magnesium, calcium, and ammonium nitrogen, from the years 1988 to 1996. This analysis also focuses on only four sites within the Bisley watershed (Puento Roto Mameyes and Bisley Quedraba Preta 1, 2, and 3).
 
-```{r}
-
-```
-
 ## Methods
 
 Figure 3 calls for the use of moving averages. We created a moving average function that ran over a 9-week interval, just as the methods in the paper. It included each date from the Sample Date column as the "focal date", and took the mean of all the values within the 9-week period.
 
-```{r}
+Code for the moving_average function can be seen below.
 
+```{r}
+moving_average <- function(focal_date, dates, value, interval_wks) {
+  # calculating interval window within dates vector
+  is_in_window <- (dates > focal_date - (interval_wks / 2) * 7) &
+    (dates < focal_date + (interval_wks / 2) * 7)
+  
+  # subsetting the values that correspond with your interval window
+   window_value <- value[is_in_window]
+   
+  # printing result
+  result <- mean(window_value, na.rm = TRUE)
+  return(result)
+}
 ```
 
 ## Results
 
-```{r}
+After producing rolling averages for each of the five nutrients and plotting them separately using ggplot, I used the patchwork package to stack them on top of one another.
 
-ca_plot <- ggplot(data = bisley_calc_avg, aes(x = sample_date, y = ca_9wk_avg)) + 
-  geom_line() 
-  geom_line(aes(x = as.integer(1989)))
-
-```
+![Attempt to replicate Figure 3 from (Schaefer et al. 2000)](images/final.png)
