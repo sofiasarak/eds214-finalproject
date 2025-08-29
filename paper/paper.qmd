@@ -16,7 +16,9 @@ library(kableExtra)
 
 ## Background
 
-This document aims to reproduce Figure 3 from Schaefer et al. 2000, cited below. Data comes from the Environmental Data Initiative under the data package also titled "Chemistry of stream water from the Luquillo Mountains". It takes a look at nutrient values of stream water in Puerto Rico over time. The paper specifically aims to analyze the fluctuations in nutrients relative to weather patterns, like hurricanes.
+This document aims to reproduce Figure 3 from Schaefer et al. 2000, cited below. Data comes from the [Environmental Data Initiative](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064) under the data package titled "Chemistry of stream water from the Luquillo Mountains".
+
+This analysis explores nutrient values of stream water in Puerto Rico over time. The paper specifically aims to analyze the fluctuations in nutrients relative to weather patterns, like hurricanes.
 
 ## Data
 
@@ -47,7 +49,7 @@ bisley_streams_sum
 
 ## Methods
 
-Figure 3 calls for the use of moving averages. We created a moving average function that ran over a 9-week interval, just as the methods in the paper. It included each date from the Sample Date column as the "focal date", and took the mean of all the values within the 9-week period.
+Figure 3 calls for the use of moving averages. We created a moving average function that ran over a 9-week interval, just as the methods in the paper. It included each date sampled as the "focal date", and took the mean of all the values within the 9-week period. This was done to reduce the number of significant oscillation if plotting just raw data.
 
 Code for the moving_average function can be seen below.
 
@@ -68,14 +70,14 @@ moving_average <- function(focal_date, dates, value, interval_wks) {
 
 ## Results
 
-After producing rolling averages for each of the five nutrients and plotting them separately using ggplot, I used the patchwork package to stack them on top of one another.
+After producing rolling averages for each of the five nutrients and plotting them separately, these graphs were combined into one.
 
 ![Attempt to replicate Figure 3 from (Schaefer et al. 2000)](images/final-03.png)
 
-### Citations
+(R packages ggplot and patchwork used)
 
+### Citations
 
 Schaefer, Douglas. A., William H. McDowell, Fredrick N. Scatena, and Clyde E. Asbury. 2000. “Effects of Hurricane Disturbance on Stream Water Concentrations and Fluxes in Eight Tropical Forest Watersheds of the Luquillo Experimental Forest, Puerto Rico.” Journal of Tropical Ecology 16 (2): 189–207. https://doi.org/10.1017/s0266467400001358.
 
 Schaefer, Douglas A., et al. "Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico." Journal of Tropical Ecology 16.2 (2000): 189-207.
-
